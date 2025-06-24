@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seminário: IA e o Futuro do Trabalho</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: #0a0a0a;
+                color: #f0f0f0;
+                overflow: hidden;
+            }
+            h1 {
+                font-weight: 900;
+                font-size: 5rem;
+                letter-spacing: -0.05em;
+                background: -webkit-linear-gradient(45deg, #3b82f6, #8b5cf6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            h2 {
+                font-weight: 700;
+                font-size: 3rem;
+                margin-top: 0.5rem;
+                margin-bottom: 2rem;
+                color: #e5e7eb;
+            }
+            h3 {
+               font-weight: 700;
+               font-size: 2rem;
+               margin-bottom: 1rem;
+               color: #93c5fd;
+            }
+            p, ul {
+                font-size: 1.5rem;
+                line-height: 1.8;
+                color: #d1d5db;
+                text-align: left;
+            }
+            li {
+                margin-bottom: 0.75rem;
+            }
+            ul {
+                list-style-position: inside;
+                list-style-type: disc;
+            }
+        }
+
+        @layer components {
+            .slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 2rem 4rem;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+                transform: scale(0.95);
+            }
+            .slide.active {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1);
+            }
+            .slide-content {
+                max-width: 1000px;
+                width: 100%;
+            }
+            .nav-arrow {
+                position: fixed;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: none;
+                padding: 1rem;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                z-index: 1000;
+            }
+            .nav-arrow:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            #prevBtn { left: 2rem; }
+            #nextBtn { right: 2rem; }
+            #progressBarContainer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 8px;
+                background-color: rgba(255, 255, 255, 0.1);
+                z-index: 1000;
+            }
+            #progressBar {
+                width: 0;
+                height: 100%;
+                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+                transition: width 0.3s ease-in-out;
+            }
+            .slide-number {
+                 position: absolute;
+                bottom: 1.5rem;
+                right: 4rem;
+                font-size: 0.8rem;
+                color: #9ca3af;
+            }
+            .grid-2 {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                width: 100%;
+            }
+            .card {
+                background: rgba(255, 255, 255, 0.05);
+                padding: 1.5rem;
+                border-radius: 1rem;
+                text-align: center;
+            }
+            .card h4 {
+                font-size: 1.25rem;
+                font-weight: 700;
+                color: #93c5fd;
+                margin-bottom: 0.5rem;
+            }
+            .card p {
+               font-size: 1rem;
+               text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Título -->
+    <section id="slide1" class="slide active">
+        <div class="slide-content">
+            <h1 class="text-6xl md:text-7xl">Inteligência Artificial<br>e o Futuro do Trabalho</h1>
+            <p class="text-2xl mt-8 text-center text-gray-300">Uma análise sobre os impactos, desafios e oportunidades na nova era da automação.</p>
+            <p class="text-lg mt-4 text-center text-gray-400">BCC503 - Informática e Sociedade</p>
+        </div>
+        <div class="slide-number">1 / 65</div>
+    </section>
+
+    <!-- Seção 1: Motivação -->
+    <section id="slide2" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">1. Motivação</h2>
+            <h3>Por que discutir Inteligência Artificial hoje?</h3>
+        </div>
+        <div class="slide-number">2 / 65</div>
+    </section>
+
+    <section id="slide3" class="slide">
+        <div class="slide-content">
+            <h3>A IA está em toda parte</h3>
+            <p>A Inteligência Artificial (IA) deixou de ser um conceito de ficção científica para se tornar uma força presente e transformadora em nosso cotidiano. Ela está nas notícias, nas estratégias das maiores empresas do mundo e nos corredores das universidades.</p>
+            <img src="https://media.discordapp.net/attachments/1159627945917300849/1386883149971194017/download.png?ex=685b5315&is=685a0195&hm=5e176ca9d389ad836405067dbf0339d8dd6849d294e9d1f78922f9935e1c5e17&=&format=webp&quality=lossless&width=972&height=972" alt="Imagem de notícias sobre IA" class="mt-8 rounded-lg shadow-lg mx-auto max-h-96">
+        </div>
+        <div class="slide-number">3 / 65</div>
+    </section>
+
+    <section id="slide4" class="slide">
+        <div class="slide-content">
+            <h3>Exemplos que Capturaram a Imaginação do Público</h3>
+            <p>Lançamentos recentes geraram um enorme interesse e, por vezes, apreensão sobre o poder e o alcance da IA:</p>
+            <div class="grid-2 mt-8">
+                <div class="card">
+                    <h4>ChatGPT & IA Generativa</h4>
+                    <p>Modelos de linguagem que podem escrever, traduzir, criar e conversar de forma surpreendentemente humana.</p>
+                </div>
+                <div class="card">
+                    <h4>Midjourney & DALL-E</h4>
+                    <p>Ferramentas que geram imagens artísticas e realistas a partir de simples descrições em texto.</p>
+                </div>
+                 <div class="card">
+                    <h4>Robôs Autônomos</h4>
+                    <p>O Optimus da Tesla e outros robôs mostram o avanço da IA combinada com a robótica para realizar tarefas físicas.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">4 / 65</div>
+    </section>
+    
+    <section id="slide5" class="slide">
+        <div class="slide-content">
+            <h3>Nosso Interesse Principal</h3>
+            <h2>Como a ascensão da IA impacta o mundo do trabalho?</h2>
+            <p>Nossa motivação é ir além das manchetes e entender as implicações profundas dessa tecnologia para os empregos, as carreiras e a forma como a sociedade se organiza em torno do trabalho.</p>
+        </div>
+        <div class="slide-number">5 / 65</div>
+    </section>
+
+    <section id="slide6" class="slide">
+        <div class="slide-content">
+            <h3>Por que este tema é tão importante?</h3>
+            <p>A automação impulsionada pela IA representa uma das maiores transformações econômicas e sociais do nosso tempo. Os números são expressivos e indicam uma mudança em escala global.</p>
+            <img src="https://lirp.cdn-website.com/ad69be73/dms3rep/multi/opt/12-1920w.png" alt="Imagem representando impacto no emprego" class="mt-8 rounded-lg shadow-lg mx-auto">
+        </div>
+        <div class="slide-number">6 / 65</div>
+    </section>
+    
+    <section id="slide7" class="slide">
+        <div class="slide-content">
+            <h3>A Escala da Mudança: Automação de Empregos</h3>
+            <p class="text-center text-4xl font-bold text-blue-300">Até 800 milhões</p>
+            <p class="text-center text-xl mt-2">de vagas de empregos no mundo podem ser automatizados até 2030.</p>
+            <p class="mt-8">Este número massivo sugere que uma parcela significativa da força de trabalho global precisará se adaptar, aprender novas habilidades ou mudar de carreira.</p>
+        </div>
+        <div class="slide-number">7 / 65</div>
+    </section>
+
+    <section id="slide8" class="slide">
+        <div class="slide-content">
+            <h3>Destruição e Criação: A Dupla Face da IA</h3>
+            <div class="grid-2 mt-8 text-center">
+                <div>
+                    <p class="text-4xl font-bold text-center text-red-400">- 85 Milhões</p>
+                    <p class="text-xl mt-2">de empregos podem ser deslocados.</p>
+                </div>
+                 <div>
+                    <p class="text-4xl font-bold text-center text-green-400">+ 97 Milhões</p>
+                    <p class="text-xl mt-2">de novos papéis podem surgir.</p>
+                </div>
+            </div>
+            <p class="mt-8">A IA não é apenas uma força de substituição. Ela também é um motor para a criação de novas profissões e novas formas de colaboração entre humanos e máquinas.</p>
+        </div>
+        <div class="slide-number">8 / 65</div>
+    </section>
+    
+     <section id="slide9" class="slide">
+        <div class="slide-content">
+            <h3>Um Debate Novo ou Antigo?</h3>
+            <p>A preocupação com a automação substituindo o trabalho humano não é nova. Ela remonta, pelo menos, à Revolução Industrial e ao surgimento do tear mecânico.</p>
+            <p class="mt-4">No entanto, o que torna o debate atual diferente e mais urgente é a <strong>velocidade</strong> e o <strong>alcance</strong> do avanço da IA. A mudança não está mais no horizonte; ela está acontecendo agora.</p>
+        </div>
+        <div class="slide-number">9 / 65</div>
+    </section>
+
+    <!-- Seção 2: Apresentação do Tema -->
+    <section id="slide10" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">2. Apresentação do Tema</h2>
+            <h3>Decodificando a Inteligência Artificial</h3>
+        </div>
+        <div class="slide-number">10 / 65</div>
+    </section>
+
+    <section id="slide11" class="slide">
+        <div class="slide-content">
+            <h3>Breve Histórico da IA: Os Fundamentos</h3>
+            <p>Para entender o presente, precisamos olhar para o passado. A jornada da IA é marcada por décadas de teoria, experimentação e avanços incrementais.</p>
+            <img src="https://midia.market/wp-content/uploads/2023/12/Navy-Modern-Timeline-Diagram-Graph-1.png" alt="Linha do Tempo da IA" class="mt-8 rounded-lg shadow-lg mx-auto">
+        </div>
+        <div class="slide-number">11 / 65</div>
+    </section>
+
+    <section id="slide12" class="slide">
+        <div class="slide-content">
+            <h3>1950: O Início Conceitual</h3>
+            <p>Alan Turing, um dos pais da computação, publica seu artigo "Computing Machinery and Intelligence".</p>
+            <p class="mt-4">Ele propõe o famoso <strong>"Teste de Turing"</strong>, um critério para avaliar se uma máquina pode exibir um comportamento inteligente indistinguível do de um ser humano.</p>
+            <p class="mt-4 text-xl italic text-blue-200">"Podem as máquinas pensar?"</p>
+        </div>
+        <div class="slide-number">12 / 65</div>
+    </section>
+
+    <section id="slide13" class="slide">
+        <div class="slide-content">
+            <h3>1956: O Nascimento do Termo</h3>
+             <p>No <strong>Dartmouth Workshop</strong>, o termo "Inteligência Artificial" é cunhado por John McCarthy. Este evento reúne os pioneiros da área e estabelece a IA como um campo de pesquisa formal.</p>
+             <p class="mt-4">A visão era otimista: criar máquinas que pudessem usar a linguagem, formar abstrações e conceitos, e resolver problemas então reservados aos humanos.</p>
+        </div>
+        <div class="slide-number">13 / 65</div>
+    </section>
+
+    <section id="slide14" class="slide">
+        <div class="slide-content">
+            <h3>1980-1990: Machine Learning e Redes Neurais</h3>
+            <p>Após períodos de otimismo excessivo e "invernos da IA" (cortes de financiamento), a pesquisa ganha novo fôlego.</p>
+            <ul class="mt-4">
+                <li><strong>Machine Learning (Aprendizado de Máquina):</strong> Algoritmos começam a ser desenvolvidos para que os computadores aprendam a partir de dados, sem serem explicitamente programados.</li>
+                <li><strong>Redes Neurais Artificiais:</strong> Inspiradas no cérebro humano, essas estruturas computacionais se tornam a base para avanços futuros.</li>
+            </ul>
+        </div>
+        <div class="slide-number">14 / 65</div>
+    </section>
+
+    <section id="slide15" class="slide">
+        <div class="slide-content">
+            <h3>2010 em diante: A Era do Deep Learning e Big Data</h3>
+            <p>A "tempestade perfeita" para a IA acontece:</p>
+            <ul class="mt-4">
+                <li><strong>Big Data:</strong> A explosão na quantidade de dados digitais disponíveis para treinar os modelos.</li>
+                <li><strong>Poder Computacional:</strong> O avanço das GPUs (Unidades de Processamento Gráfico) permite treinar redes neurais muito maiores e mais complexas.</li>
+                <li><strong>Deep Learning (Aprendizado Profundo):</strong> O uso de redes neurais com muitas camadas ("profundas") leva a avanços revolucionários em reconhecimento de imagem, voz e processamento de linguagem natural.</li>
+            </ul>
+        </div>
+        <div class="slide-number">15 / 65</div>
+    </section>
+
+     <section id="slide16" class="slide">
+        <div class="slide-content">
+            <h3>2020 em diante: A Popularização da IA Generativa</h3>
+            <p>Uma nova classe de modelos de IA se torna acessível ao público, capaz não apenas de analisar, mas de <strong>criar</strong> conteúdo novo.</p>
+             <div class="grid-2 mt-8">
+                <div class="card">
+                    <h4>ChatGPT</h4>
+                    <p>Democratizou o acesso a modelos de linguagem poderosos.</p>
+                </div>
+                <div class="card">
+                    <h4>DALL-E & Midjourney</h4>
+                    <p>Transformaram a forma como criamos e pensamos sobre arte e design visual.</p>
+                </div>
+            </div>
+            <p class="mt-8">Essa fase marca a transição da IA de uma ferramenta de especialistas para uma ferramenta de massa.</p>
+        </div>
+        <div class="slide-number">16 / 65</div>
+    </section>
+    
+    <section id="slide17" class="slide">
+        <div class="slide-content">
+            <h3>Conceitos Importantes para Entender a IA</h3>
+            <p>Vamos desmistificar alguns termos essenciais que aparecem constantemente nas discussões sobre Inteligência Artificial.</p>
+        </div>
+        <div class="slide-number">17 / 65</div>
+    </section>
+
+    <section id="slide18" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>IA Fraca (Narrow AI)</h3>
+                 <p>É a IA que vemos hoje. Ela é projetada e treinada para realizar uma tarefa específica. Não possui consciência ou senciência.</p>
+                 <p class="mt-4"><strong>Exemplos:</strong></p>
+                 <ul class="list-disc ml-5">
+                    <li>Assistentes virtuais (Siri, Alexa)</li>
+                    <li>Sistemas de recomendação (Netflix, Spotify)</li>
+                    <li>Software de reconhecimento facial</li>
+                 </ul>
+            </div>
+            <div>
+                <img src="https://images-ext-1.discordapp.net/external/vv2HpXv_hL1Is5IO9FdoplKziEBrW5WywznOV5U1jTU/%3Fwidth%3D1897%26height%3D950%26name%3Dnarrow%2520ai%2520examples.png/https/www.proserveit.com/hs-fs/hubfs/narrow%2520ai%2520examples.png?format=webp&quality=lossless&width=1734&height=868" alt="Ícone de IA Fraca" class="rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+        <div class="slide-number">18 / 65</div>
+    </section>
+
+    <section id="slide19" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>IA Forte (General AI)</h3>
+                 <p>Um tipo de IA, ainda hipotético, que possui a capacidade intelectual e a consciência de um ser humano. Poderia realizar com sucesso qualquer tarefa intelectual que um humano pode.</p>
+                 <p class="mt-4">A IA Forte é o objetivo de longo prazo de muitos pesquisadores, mas permanece no campo da pesquisa teórica e da ficção científica por enquanto.</p>
+            </div>
+            <div>
+                <img src="https://assets.robotsguide.com/images/7p2whiua/production/9e5916e1ffe321203fb681aeba6cab8dba5ab8e1-2048x1536.jpg?w=1400&auto=format" alt="Ícone de IA Forte" class="rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+        <div class="slide-number">19 / 65</div>
+    </section>
+
+    <section id="slide20" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>Machine Learning (ML)</h3>
+                 <p>Um subcampo da IA. Em vez de programar regras explícitas, os desenvolvedores "alimentam" o algoritmo com uma grande quantidade de dados, e ele aprende a reconhecer padrões e tomar decisões.</p>
+                 <p class="mt-4"><strong>Exemplo:</strong> Um filtro de spam aprende a identificar e-mails indesejados analisando milhares de exemplos de spam e e-mails legítimos.</p>
+            </div>
+             <div>
+                 <h3>Deep Learning</h3>
+                 <p>Um subcampo do Machine Learning baseado em redes neurais artificiais com muitas camadas ("profundas"). É o que impulsiona os avanços mais recentes em IA.</p>
+                 <p class="mt-4"><strong>Exemplo:</strong> Carros autônomos usam Deep Learning para identificar pedestres, sinais de trânsito e outros veículos em tempo real.</p>
+            </div>
+        </div>
+        <div class="slide-number">20 / 65</div>
+    </section>
+    
+    <section id="slide21" class="slide">
+        <div class="slide-content">
+             <h3>Automação Inteligente</h3>
+             <p>É a combinação de Inteligência Artificial (como Machine Learning) com tecnologias de automação, como a Robótica (RPA - Robotic Process Automation).</p>
+             <p class="mt-4">O objetivo é automatizar processos de negócios complexos, de ponta a ponta, que requerem não apenas repetição, mas também tomada de decisão e adaptação.</p>
+             <p class="mt-4"><strong>Exemplo:</strong> Um sistema que não apenas preenche um formulário (RPA), mas também lê um e-mail não estruturado para extrair as informações corretas e decidir qual formulário usar (IA).</p>
+        </div>
+        <div class="slide-number">21 / 65</div>
+    </section>
+    
+    <!-- Seção 3: Discussão -->
+    <section id="slide22" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">3. Discussão</h2>
+            <h3>Os Impactos da IA na Sociedade e no Trabalho</h3>
+        </div>
+        <div class="slide-number">22 / 65</div>
+    </section>
+    
+    <section id="slide23" class="slide">
+        <div class="slide-content">
+            <h3>Uma Moeda de Duas Faces</h3>
+            <p>A revolução da IA traz consigo um enorme potencial para o bem, mas também riscos significativos. É crucial analisar ambos os lados para navegar essa transição de forma consciente e responsável.</p>
+        </div>
+        <div class="slide-number">23 / 65</div>
+    </section>
+
+    <section id="slide24" class="slide">
+        <div class="slide-content">
+            <h2 class="text-green-400">Impactos Positivos para a Sociedade</h2>
+        </div>
+        <div class="slide-number">24 / 65</div>
+    </section>
+
+    <section id="slide25" class="slide">
+        <div class="slide-content">
+            <h3>1. Aumento Exponencial da Produtividade</h3>
+            <p>A IA pode executar tarefas repetitivas, analíticas e complexas com uma velocidade e precisão muito superiores às humanas. Isso libera os profissionais para se concentrarem em atividades estratégicas, criativas e de alto valor.</p>
+            <p class="mt-4"><strong>Exemplo:</strong> Na medicina, algoritmos de IA podem analisar exames de imagem (raios-X, ressonâncias) para detectar sinais de doenças como câncer com uma precisão igual ou superior à de radiologistas experientes, e em uma fração do tempo.</p>
+        </div>
+        <div class="slide-number">25 / 65</div>
+    </section>
+
+    <section id="slide26" class="slide">
+        <div class="slide-content">
+            <h3>2. Criação de Novos Empregos e Profissões</h3>
+            <p>Enquanto algumas tarefas são automatizadas, a própria tecnologia de IA cria a necessidade de novas funções e especialidades que não existiam há uma década.</p>
+             <div class="grid-2 mt-8">
+                <div class="card">
+                    <h4>Cientista de Dados</h4>
+                    <p>Analisa grandes volumes de dados para extrair insights e treinar modelos de IA.</p>
+                </div>
+                <div class="card">
+                    <h4>Engenheiro de Prompt</h4>
+                    <p>Especialista em criar as instruções corretas para obter os melhores resultados de IAs generativas.</p>
+                </div>
+                <div class="card">
+                    <h4>Especialista em Ética de IA</h4>
+                    <p>Garante que os sistemas de IA sejam justos, transparentes e não perpetuem vieses.</p>
+                </div>
+             </div>
+        </div>
+        <div class="slide-number">26 / 65</div>
+    </section>
+    
+    <section id="slide27" class="slide">
+        <div class="slide-content">
+            <h3>Mais Novas Profissões Emergentes</h3>
+             <div class="grid-2 mt-8">
+                <div class="card">
+                    <h4>Curador de Dados de IA</h4>
+                    <p>Seleciona e prepara os conjuntos de dados para garantir que os modelos sejam treinados com informações de alta qualidade.</p>
+                </div>
+                <div class="card">
+                    <h4>Gerente de Produto de IA</h4>
+                    <p>Lidera o desenvolvimento de produtos e serviços que têm a IA como componente central.</p>
+                </div>
+                <div class="card">
+                    <h4>Advogado de IA</h4>
+                    <p>Especialista em questões legais relacionadas à propriedade intelectual, responsabilidade e regulação de sistemas de IA.</p>
+                </div>
+             </div>
+        </div>
+        <div class="slide-number">27 / 65</div>
+    </section>
+
+    <section id="slide28" class="slide">
+        <div class="slide-content">
+            <h3>3. Melhorias na Qualidade de Vida</h3>
+            <p>A IA tem o potencial de resolver alguns dos problemas mais desafiadores da humanidade e melhorar o nosso dia a dia em diversas áreas.</p>
+            <ul class="mt-4">
+                <li><strong>Saúde:</strong> Diagnósticos mais rápidos, descoberta de novos medicamentos e tratamentos personalizados.</li>
+                <li><strong>Educação:</strong> Plataformas de aprendizado adaptativo que personalizam o ensino para cada aluno.</li>
+                <li><strong>Transporte:</strong> Veículos autônomos que prometem reduzir acidentes e otimizar o tráfego.</li>
+                <li><strong>Sustentabilidade:</strong> Otimização do consumo de energia e monitoramento de mudanças climáticas.</li>
+            </ul>
+        </div>
+        <div class="slide-number">28 / 65</div>
+    </section>
+    
+    <section id="slide29" class="slide">
+        <div class="slide-content">
+            <h3>4. Inovação e Novos Mercados</h3>
+            <p>A IA atua como uma "tecnologia de propósito geral", assim como a eletricidade ou a internet. Ela não é apenas um produto, mas um catalisador que permite a criação de inúmeros novos produtos, serviços e modelos de negócio.</p>
+            <p class="mt-4"><strong>Exemplo:</strong> O surgimento de empresas de "drogas projetadas por IA", que usam a tecnologia para acelerar radicalmente a pesquisa de novos compostos farmacêuticos.</p>
+        </div>
+        <div class="slide-number">29 / 65</div>
+    </section>
+
+    <section id="slide30" class="slide">
+        <div class="slide-content">
+            <h2 class="text-red-400">Impactos Negativos e Desafios</h2>
+        </div>
+        <div class="slide-number">30 / 65</div>
+    </section>
+
+    <section id="slide31" class="slide">
+        <div class="slide-content">
+            <h3>1. Desemprego Tecnológico</h3>
+            <p>Este é o medo mais imediato e discutido. A automação pode substituir trabalhadores em tarefas rotineiras, tanto manuais quanto cognitivas.</p>
+            <p class="mt-4"><strong>Setores mais vulneráveis:</strong></p>
+             <ul class="mt-4">
+                <li><strong>Transporte e Logística:</strong> motoristas de caminhão, operadores de empilhadeira, entregadores.</li>
+                <li><strong>Atendimento ao Cliente:</strong> operadores de call center, suporte de primeiro nível.</li>
+                <li><strong>Manufatura:</strong> trabalhadores de linha de montagem.</li>
+                <li><strong>Administrativo:</strong> entrada de dados, agendamento, trabalho de escritório rotineiro.</li>
+            </ul>
+        </div>
+        <div class="slide-number">31 / 65</div>
+    </section>
+
+    <section id="slide32" class="slide">
+        <div class="slide-content">
+            <h3>2. Aumento da Desigualdade Social</h3>
+            <p>A transição para uma economia baseada em IA pode aprofundar as desigualdades existentes de várias maneiras:</p>
+            <ul class="mt-4">
+                <li><strong>Divisão de Habilidades:</strong> Cria uma alta demanda por trabalhadores altamente qualificados (que se beneficiam) e reduz a demanda por trabalhadores de média e baixa qualificação (cujos salários podem estagnar ou cair).</li>
+                <li><strong>Divisão Geográfica:</strong> Os benefícios da IA podem se concentrar em países e centros urbanos tecnologicamente avançados, deixando outras regiões para trás.</li>
+                <li><strong>Divisão de Acesso:</strong> Indivíduos sem acesso à educação e tecnologia necessárias para participar desta nova economia ficam em desvantagem.</li>
+            </ul>
+        </div>
+        <div class="slide-number">32 / 65</div>
+    </section>
+
+    <section id="slide33" class="slide">
+        <div class="slide-content">
+            <h3>3. Ética e Vieses (Bias)</h3>
+            <p>Os sistemas de IA aprendem com os dados que lhes são fornecidos. Se esses dados refletem preconceitos e vieses existentes na sociedade (de gênero, raça, idade), a IA irá não apenas replicar, mas também amplificar esses vieses em larga escala.</p>
+            <p class="mt-4 text-xl italic text-red-200">Uma IA não é inerentemente "neutra" ou "objetiva". Ela é um espelho dos dados com os quais foi treinada.</p>
+        </div>
+        <div class="slide-number">33 / 65</div>
+    </section>
+    
+    <section id="slide34" class="slide">
+        <div class="slide-content">
+            <h3>Exemplo de Viés: O Caso da Amazon</h3>
+            <p>Em 2018, foi revelado que a Amazon descartou uma ferramenta de recrutamento baseada em IA porque ela mostrava preconceito contra candidatas mulheres.</p>
+            <ul class="mt-4">
+                <li><strong>O Problema:</strong> O modelo foi treinado com currículos enviados à empresa ao longo de 10 anos, que eram, em sua maioria, de homens.</li>
+                <li><strong>O Resultado:</strong> A IA "aprendeu" que candidatos masculinos eram preferíveis. Ela penalizava currículos que continham a palavra "mulher" (como em "capitã do clube de xadrez feminino") e rebaixava graduadas de faculdades exclusivas para mulheres.</li>
+            </ul>
+        </div>
+        <div class="slide-number">34 / 65</div>
+    </section>
+
+    <section id="slide35" class="slide">
+        <div class="slide-content">
+            <h3>4. Questões de Privacidade e Vigilância</h3>
+            <p>A IA requer enormes quantidades de dados para funcionar, o que levanta sérias preocupações sobre privacidade.</p>
+            <ul class="mt-4">
+                <li><strong>Vigilância no Trabalho:</strong> Empresas podem usar IA para monitorar a produtividade dos funcionários de maneiras invasivas.</li>
+                <li><strong>Uso de Dados Pessoais:</strong> Como nossos dados são coletados, usados e protegidos por sistemas de IA?</li>
+                <li><strong>Reconhecimento Facial:</strong> O uso em massa de tecnologias de reconhecimento facial por governos e empresas cria o risco de vigilância em massa e erosão do anonimato.</li>
+            </ul>
+        </div>
+        <div class="slide-number">35 / 65</div>
+    </section>
+    
+    <section id="slide36" class="slide">
+        <div class="slide-content">
+            <h3>5. Dependência Tecnológica e Riscos Sistêmicos</h3>
+            <p>À medida que a sociedade se torna mais dependente de sistemas de IA para funções críticas (mercado financeiro, redes elétricas, defesa), novos riscos surgem.</p>
+             <ul class="mt-4">
+                <li><strong>Concentração de Poder:</strong> A tecnologia de IA de ponta está concentrada nas mãos de poucas grandes empresas de tecnologia (Big Techs), criando uma dependência perigosa.</li>
+                <li><strong>Vulnerabilidades de Segurança:</strong> Sistemas de IA podem ser alvos de ataques cibernéticos sofisticados.</li>
+                <li><strong>"Caixa Preta":</strong> A complexidade de alguns modelos de Deep Learning torna difícil (ou impossível) entender exatamente como eles chegam a uma determinada decisão, dificultando a auditoria e a correção de erros.</li>
+            </ul>
+        </div>
+        <div class="slide-number">36 / 65</div>
+    </section>
+
+    <section id="slide37" class="slide">
+        <div class="slide-content">
+            <h3>O Futuro do Trabalho na Era da IA</h3>
+            <p>Considerando os impactos positivos e negativos, o que podemos esperar para o futuro do trabalho?</p>
+        </div>
+        <div class="slide-number">37 / 65</div>
+    </section>
+
+    <section id="slide38" class="slide">
+        <div class="slide-content">
+            <h3>Automação Crescente de Tarefas, não de Empregos</h3>
+            <p>A visão mais provável não é a de que "os robôs vão roubar todos os empregos", mas sim que a IA irá automatizar <strong>tarefas específicas</strong> dentro de cada profissão.</p>
+            <p class="mt-4">Quase todos os empregos serão redefinidos. O foco muda de realizar tarefas repetitivas para usar a IA como uma ferramenta para aumentar as capacidades humanas.</p>
+            <p class="mt-4 text-xl italic text-blue-200">Exemplo: Um advogado usará a IA para pesquisar jurisprudência em segundos, liberando tempo para focar na estratégia do caso e no relacionamento com o cliente.</p>
+        </div>
+        <div class="slide-number">38 / 65</div>
+    </section>
+
+    <section id="slide39" class="slide">
+        <div class="slide-content">
+            <h3>A Importância das Habilidades Humanas (Soft Skills)</h3>
+            <p>À medida que a IA assume tarefas técnicas e analíticas, as habilidades que são unicamente (ou dificilmente) replicáveis por máquinas se tornam mais valiosas do que nunca.</p>
+            <div class="grid-2 mt-8">
+                <div class="card"><h4>Pensamento Crítico</h4><p>Analisar informações de forma objetiva e tomar decisões estratégicas.</p></div>
+                <div class="card"><h4>Criatividade</h4><p>Gerar ideias novas e soluções originais para problemas complexos.</p></div>
+                <div class="card"><h4>Inteligência Emocional</h4><p>Compreender e gerenciar as próprias emoções e as dos outros; empatia e colaboração.</p></div>
+                <div class="card"><h4>Habilidades Digitais</h4><p>A capacidade de usar e interagir eficazmente com ferramentas digitais, incluindo sistemas de IA.</p></div>
+            </div>
+        </div>
+        <div class="slide-number">39 / 65</div>
+    </section>
+    
+    <section id="slide40" class="slide">
+        <div class="slide-content">
+            <h3>Colaboração Homem-Máquina (Centauro)</h3>
+            <p>O futuro do trabalho não é uma competição de "humanos vs. máquinas", mas sim uma colaboração.</p>
+            <p class="mt-4">O modelo do "Centauro" (nomeado após o jogador de xadrez Garry Kasparov) sugere que a combinação de um humano com uma IA é mais poderosa do que qualquer um deles isoladamente.</p>
+            <p class="mt-4 text-xl italic text-blue-200">O humano define a estratégia, faz perguntas, interpreta resultados e lida com o inesperado. A IA executa a análise de dados e a computação em alta velocidade.</p>
+        </div>
+        <div class="slide-number">40 / 65</div>
+    </section>
+    
+    <section id="slide41" class="slide">
+        <div class="slide-content">
+            <h3>A Necessidade de Novas Políticas Públicas</h3>
+            <p>A magnitude da transformação exige uma resposta coordenada de governos e da sociedade para garantir uma transição justa e equitativa.</p>
+             <ul class="mt-4">
+                <li><strong>Regulamentação Ética:</strong> Leis para garantir a transparência, a justiça e a responsabilidade dos algoritmos.</li>
+                <li><strong>Proteção ao Trabalhador:</strong> Modernização das leis trabalhistas para a era digital, incluindo a proteção de trabalhadores de "gig economy".</li>
+                <li><strong>Renda Básica Universal (UBI):</strong> Um debate crescente sobre se uma renda garantida pode ser uma rede de segurança necessária em um futuro com menos trabalho tradicional.</li>
+                <li><strong>Tributação sobre Robôs/IA:</strong> Uma ideia controversa para financiar programas sociais com os ganhos de produtividade da automação.</li>
+            </ul>
+        </div>
+        <div class="slide-number">41 / 65</div>
+    </section>
+
+    <!-- Seção 4: Exemplos Reais -->
+    <section id="slide42" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">4. Exemplos Reais</h2>
+            <h3>A IA em Ação no Mundo Corporativo</h3>
+        </div>
+        <div class="slide-number">42 / 65</div>
+    </section>
+
+    <section id="slide43" class="slide">
+        <div class="slide-content">
+            <h3>Exemplo 1: Amazon e a Logística Automatizada</h3>
+            <p>Nos seus centros de distribuição, a Amazon utiliza milhares de robôs Kiva, que se movem de forma autônoma pelo armazém.</p>
+            <ul class="mt-4">
+                <li><strong>Como funciona:</strong> Em vez de um funcionário andar quilômetros para encontrar um produto, o robô traz a estante inteira até o funcionário.</li>
+                <li><strong>Resultado Positivo:</strong> Aceleração drástica no processamento de pedidos, permitindo entregas no mesmo dia. Aumento da eficiência e capacidade de armazenamento.</li>
+                 <li><strong>Impacto no Trabalho:</strong> Redução da necessidade de "pickers" (funcionários que coletam produtos). Os papéis humanos mudam para supervisão, manutenção dos robôs e tarefas de empacotamento mais complexas.</li>
+            </ul>
+        </div>
+        <div class="slide-number">43 / 65</div>
+    </section>
+    
+    <section id="slide44" class="slide">
+        <div class="slide-content">
+            <img src="https://www.oficinadanet.com.br/media/post/13763/750/robo-amazon.jpg" alt="Robôs Kiva em um armazém da Amazon" class="rounded-lg shadow-lg mx-auto">
+            <p class="mt-4 text-lg italic">Robôs Kiva transportam prateleiras nos centros de distribuição da Amazon.</p>
+        </div>
+        <div class="slide-number">44 / 65</div>
+    </section>
+
+    <section id="slide45" class="slide">
+        <div class="slide-content">
+            <h3>Exemplo 2: Chatbots no Atendimento ao Cliente</h3>
+            <p>Grandes bancos e empresas de telecomunicações (como Bradesco com a BIA, Itaú, Vivo) investiram pesadamente em chatbots e assistentes virtuais baseados em IA para lidar com o atendimento ao cliente.</p>
+            <ul class="mt-4">
+                <li><strong>Como funciona:</strong> A IA lida com a maioria das solicitações comuns e rotineiras (consulta de saldo, 2ª via de boleto, dúvidas frequentes), 24 horas por dia, 7 dias por semana.</li>
+                <li><strong>Resultado Positivo:</strong> Redução massiva de custos operacionais com call centers. Atendimento instantâneo para problemas simples.</li>
+                 <li><strong>Impacto no Trabalho:</strong> Redução significativa das vagas de atendente de call center de primeiro nível. Os agentes humanos que restam focam em problemas mais complexos, vendas e resolução de conflitos, exigindo mais treinamento e habilidades.</li>
+            </ul>
+        </div>
+        <div class="slide-number">45 / 65</div>
+    </section>
+    
+    <section id="slide46" class="slide">
+        <div class="slide-content">
+             <img src="https://www.chatbot.com/home__deliver-ai_hubc1d1bd94d5753f7bb2f7cd84990b0d8_83637_1024x0_resize_lanczos_3.png" alt="Interface de chatbot" class="rounded-lg shadow-lg mx-auto">
+            <p class="mt-4 text-lg italic">Chatbots lidam com milhões de interações, otimizando o atendimento.</p>
+        </div>
+        <div class="slide-number">46 / 65</div>
+    </section>
+
+    <section id="slide47" class="slide">
+        <div class="slide-content">
+            <h3>Outros Exemplos Reais</h3>
+        </div>
+        <div class="slide-number">47 / 65</div>
+    </section>
+    
+    <section id="slide48" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>Tesla e a Direção Autônoma</h3>
+                 <p>Os carros da Tesla utilizam um sofisticado sistema de IA (Autopilot/Full Self-Driving) que coleta dados de milhões de quilômetros dirigidos por sua frota para aprender e melhorar continuamente.</p>
+                 <p class="mt-4"><strong>Impacto Potencial:</strong> Ameaça direta à profissão de motorista profissional (caminhões, táxis, ônibus) no longo prazo, mas também a criação de novos empregos em desenvolvimento de IA, supervisão remota de frotas e infraestrutura de suporte.</p>
+            </div>
+            <div>
+                <img src="https://miro.medium.com/v2/resize:fit:700/1*W62gVECnnhRoTne9hoi_kQ.jpeg" alt="Visão do Computador de um Tesla" class="rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+        <div class="slide-number">48 / 65</div>
+    </section>
+
+    <section id="slide49" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>IA na Criação de Conteúdo</h3>
+                 <p>Agências de notícias como a Associated Press e a Forbes usam IA para gerar automaticamente artigos sobre resultados financeiros de empresas e resumos de jogos esportivos.</p>
+                 <p class="mt-4"><strong>Impacto Potencial:</strong> Automatiza a parte mais rotineira do jornalismo (baseado em dados), liberando jornalistas para reportagens investigativas e análises aprofundadas. No entanto, também levanta questões sobre originalidade, plágio e o futuro de redatores e criadores de conteúdo de nível básico.</p>
+            </div>
+            <div>
+                <img src="https://s2.glbimg.com/VVezyj8B5rX-NxvY_DiSVt1q5RE=/620x350/e.glbimg.com/og/ed/f/original/2017/11/03/artificial-intelligence.jpg" alt="Artigo gerado por IA" class="rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+        <div class="slide-number">49 / 65</div>
+    </section>
+    
+    <section id="slide50" class="slide">
+        <div class="slide-content grid-2">
+            <div>
+                 <h3>IA no Diagnóstico Médico</h3>
+                 <p>Sistemas como o da DeepMind (Google) podem analisar exames oftalmológicos com a mesma precisão de especialistas para detectar doenças como a retinopatia diabética.</p>
+                 <p class="mt-4"><strong>Impacto Potencial:</strong> Não substitui o médico, mas atua como uma ferramenta de auxílio poderosa. Permite triagens em massa, diagnósticos mais rápidos e precisos, e direciona a atenção dos especialistas para os casos mais urgentes. Aumenta a capacidade do sistema de saúde.</p>
+            </div>
+            <div>
+                <img src="https://radiologiaclub.com/wp-content/uploads/2018/11/img_20181016_1619394359677056859471614.jpg" alt="Análise de Exame por IA" class="rounded-lg shadow-lg mx-auto">
+            </div>
+        </div>
+        <div class="slide-number">50 / 65</div>
+    </section>
+
+    <!-- Seção 5: Conclusão -->
+    <section id="slide51" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">5. Conclusão</h2>
+            <h3>Navegando o Futuro com Responsabilidade</h3>
+        </div>
+        <div class="slide-number">51 / 65</div>
+    </section>
+
+    <section id="slide52" class="slide">
+        <div class="slide-content">
+            <h3>Síntese dos Pontos-Chave</h3>
+             <ul class="mt-4">
+                <li>A IA é uma tecnologia transformadora com um enorme potencial para aumentar a produtividade e a qualidade de vida.</li>
+                <li>Ela apresenta uma dualidade: cria novos empregos enquanto torna outros obsoletos, exigindo uma adaptação massiva da força de trabalho.</li>
+                <li>Os desafios de viés, desigualdade, privacidade e ética são reais e precisam ser endereçados proativamente.</li>
+                <li>O futuro do trabalho não é a ausência de humanos, mas uma simbiose, onde a colaboração homem-máquina será a norma.</li>
+            </ul>
+        </div>
+        <div class="slide-number">52 / 65</div>
+    </section>
+    
+    <section id="slide53" class="slide">
+        <div class="slide-content">
+            <h3>Nosso Ponto de Vista Pessoal</h3>
+            <p>A Inteligência Artificial não deve ser vista como um destino inevitável, mas como uma <strong>ferramenta poderosa</strong>. Como qualquer ferramenta, seu impacto (positivo ou negativo) dependerá de como escolhemos construí-la, regulá-la e utilizá-la.</p>
+        </div>
+        <div class="slide-number">53 / 65</div>
+    </section>
+    
+    <section id="slide54" class="slide">
+        <div class="slide-content">
+             <h3>Nosso Ponto de Vista Pessoal (cont.)</h3>
+            <p>Não acreditamos que este seja "o fim do trabalho", mas sim o início de uma <strong>profunda redefinição do que significa trabalhar</strong>.</p>
+            <p class="mt-4">A transição será desafiadora e, por vezes, dolorosa para alguns setores. Ignorar os impactos negativos seria irresponsável. A chave é planejar e agir agora para moldar um futuro onde os benefícios da IA sejam compartilhados de forma ampla e justa.</p>
+        </div>
+        <div class="slide-number">54 / 65</div>
+    </section>
+
+    <section id="slide55" class="slide">
+        <div class="slide-content">
+            <h3>Propostas para Mitigar os Impactos Negativos</h3>
+            <p>Como podemos navegar esta transição de forma construtiva? A responsabilidade é compartilhada entre governos, empresas e indivíduos.</p>
+        </div>
+        <div class="slide-number">55 / 65</div>
+    </section>
+    
+    <section id="slide56" class="slide">
+        <div class="slide-content">
+            <h3>Proposta 1: Revolução na Educação</h3>
+            <p>Precisamos repensar a educação desde a base para preparar as futuras gerações.</p>
+            <ul class="mt-4">
+                <li><strong>Educação Básica:</strong> Inclusão de noções de pensamento computacional, lógica de programação e letramento digital nos currículos escolares.</li>
+                <li><strong>Ensino Superior:</strong> Incentivar currículos interdisciplinares que combinem tecnologia com humanidades, ética e artes.</li>
+                <li><strong>Foco em Habilidades:</strong> Mudar o foco da memorização para o desenvolvimento de criatividade, pensamento crítico e resolução de problemas.</li>
+            </ul>
+        </div>
+        <div class="slide-number">56 / 65</div>
+    </section>
+
+    <section id="slide57" class="slide">
+        <div class="slide-content">
+            <h3>Proposta 2: Requalificação e Aprendizagem Contínua</h3>
+            <p>A vida profissional não será mais linear (aprender -> trabalhar -> aposentar). Precisamos de um ecossistema de aprendizagem ao longo da vida (lifelong learning).</p>
+            <ul class="mt-4">
+                <li><strong>Programas Governamentais:</strong> Incentivos fiscais e subsídios para empresas que investem na requalificação (reskilling) de seus funcionários.</li>
+                <li><strong>Parcerias Público-Privadas:</strong> Criação de programas de treinamento massivos para trabalhadores em setores ameaçados, focados nas habilidades do futuro.</li>
+                <li><strong>Microcredenciais:</strong> Plataformas que oferecem certificações ágeis e reconhecidas para habilidades específicas.</li>
+            </ul>
+        </div>
+        <div class="slide-number">57 / 65</div>
+    </section>
+    
+    <section id="slide58" class="slide">
+        <div class="slide-content">
+            <h3>Proposta 3: Marco Regulatório e Ético</h3>
+            <p>A inovação não pode acontecer em um vácuo legal e ético. É preciso estabelecer "guard rails" para guiar o desenvolvimento da IA.</p>
+             <ul class="mt-4">
+                <li><strong>Transparência Algorítmica:</strong> Exigir que empresas possam explicar como suas IAs tomam decisões críticas (ex: concessão de crédito, contratação).</li>
+                <li><strong>Auditorias de Viés:</strong> Obrigar auditorias independentes para identificar e mitigar vieses em sistemas de IA de alto impacto.</li>
+                <li><strong>Proteção de Dados:</strong> Fortalecer leis como a LGPD para garantir que os dados usados para treinar IAs sejam coletados e utilizados de forma ética e segura.</li>
+            </ul>
+        </div>
+        <div class="slide-number">58 / 65</div>
+    </section>
+    
+    <!-- Seção 6: Discussão com a Turma -->
+    <section id="slide59" class="slide">
+        <div class="slide-content">
+            <h2 class="border-b-4 border-blue-500 pb-2 inline-block">6. Discussão com a Turma</h2>
+            <h3>Perguntas para Debate</h3>
+        </div>
+        <div class="slide-number">59 / 65</div>
+    </section>
+    
+    <section id="slide60" class="slide">
+        <div class="slide-content">
+            <h2 class="text-3xl">Pergunta 1:</h2>
+            <p class="text-4xl mt-6 font-bold text-blue-200">Você se sente ameaçado ou capacitado pela IA em sua futura profissão?</p>
+            <p class="mt-4 text-xl">Quais tarefas específicas da sua área você acredita que serão automatizadas e quais habilidades humanas se tornarão mais importantes?</p>
+        </div>
+        <div class="slide-number">60 / 65</div>
+    </section>
+    
+    <section id="slide61" class="slide">
+        <div class="slide-content">
+            <h2 class="text-3xl">Pergunta 2:</h2>
+            <p class="text-4xl mt-6 font-bold text-blue-200">A IA pode ser, de fato, controlada eticamente?</p>
+            <p class="mt-4 text-xl">É possível eliminar completamente os vieses dos algoritmos? Quem deveria ser responsável quando uma IA comete um erro grave?</p>
+        </div>
+        <div class="slide-number">61 / 65</div>
+    </section>
+    
+    <section id="slide62" class="slide">
+        <div class="slide-content">
+            <h2 class="text-3xl">Pergunta 3:</h2>
+            <p class="text-4xl mt-6 font-bold text-blue-200">De quem é a responsabilidade principal de mitigar os impactos negativos da IA?</p>
+             <div class="grid-2 mt-8">
+                <div class="card"><h4>Empresas?</h4><p>(Que desenvolvem e lucram com a tecnologia)</p></div>
+                <div class="card"><h4>Governos?</h4><p>(Que devem proteger os cidadãos e a estabilidade social)</p></div>
+                <div class="card"><h4>Indivíduos?</h4><p>(Que devem se adaptar e buscar requalificação)</p></div>
+                <div class="card"><h4>Instituições de Ensino?</h4><p>(Que devem preparar as novas gerações)</p></div>
+            </div>
+        </div>
+        <div class="slide-number">62 / 65</div>
+    </section>
+    
+    <!-- Referências -->
+    <section id="slide63" class="slide">
+        <div class="slide-content">
+            <h3>Referências Principais</h3>
+            <ul class="mt-4 text-sm" style="columns: 2;">
+                <li>Brynjolfsson, E., & McAfee, A. (2014). The Second Machine Age.</li>
+                <li>Exame (2023). Como o Bradesco economiza milhões com a BIA.</li>
+                <li>Fórum Econômico Mundial (2023). Future of Jobs Report.</li>
+                <li>Goodfellow, I., et al. (2016). Deep Learning.</li>
+                <li>McKinsey Global Institute (2021). The future of work after COVID-19.</li>
+                <li>OECD (2021). OECD Employment Outlook.</li>
+                <li>PwC (2021). Global AI Study.</li>
+                <li>Russell, S., & Norvig, P. (2021). Artificial Intelligence: A Modern Approach.</li>
+                 <li>The Guardian (2018). 'Humans are the least efficient part of the process': the unstoppable rise of the Amazon robot.</li>
+                <li>Turing, A. M. (1950). Computing machinery and intelligence.</li>
+            </ul>
+        </div>
+        <div class="slide-number">63 / 65</div>
+    </section>
+    
+    <section id="slide64" class="slide">
+        <div class="slide-content">
+            <h1>Obrigado!</h1>
+            <h2 class="text-3xl mt-4">Abrimos agora para perguntas e debate.</h2>
+        </div>
+        <div class="slide-number">64 / 65</div>
+    </section>
+    
+    <section id="slide65" class="slide">
+        <div class="slide-content">
+            <h1>Fim</h1>
+        </div>
+        <div class="slide-number">65 / 65</div>
+    </section>
+
+
+    <!-- Navegação e Barra de Progresso -->
+    <button id="prevBtn" class="nav-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button id="nextBtn" class="nav-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <div id="progressBarContainer">
+        <div id="progressBar"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progressBar');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+
+                // Atualizar barra de progresso
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Esconder/mostrar botões de navegação
+                prevBtn.style.display = currentSlide === 0 ? 'none' : 'block';
+                nextBtn.style.display = currentSlide === totalSlides - 1 ? 'none' : 'block';
+            }
+
+            function showNextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            }
+
+            function showPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+
+            nextBtn.addEventListener('click', showNextSlide);
+            prevBtn.addEventListener('click', showPrevSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevSlide();
+                }
+            });
+
+            // Iniciar a apresentação
+            updateSlides();
+        });
+    </script>
+</body>
+</html>
